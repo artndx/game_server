@@ -46,9 +46,12 @@ int main(int argc, const char* argv[]) {
 
     try {
         const static unsigned NUM_THREADS = std::thread::hardware_concurrency();
-        const char* DB_URL = std::getenv("GAME_DB_URL");
+        // const char* DB_URL = std::getenv("GAME_DB_URL");
+        const char* DB_URL = "postgres://postgres:postgres@localhost:5432/";
+
         if (!DB_URL) {
             throw std::runtime_error("GAME_DB_URL is not specified");
+            
         }
         db_connection::CreateTable(DB_URL);
         auto db_manager = std::make_unique<db_connection::DatabaseManager>(NUM_THREADS, DB_URL);
